@@ -1,0 +1,17 @@
+//LHAYNIEU    JOB (HAYNIE),'CORE ROD FILL CALCULATOR',
+//            CLASS=U,NOTIFY=&SYSUID,MSGCLASS=U,REGION=4096K
+//**********************************************************************
+//* CATEGORY.: ROCKET CALCULATIONS
+//* GROUP....: FORTRAN PROGRAMS
+//* AUTHOR...: LANCE HAYNIE <LANCE@HAYNIEMAIL.COM>
+//* DATE.....: 2017-09-14
+//* PURPOSE..: CALC MAX FILL WITH CORE ROD
+//**********************************************************************
+//COREROD     EXEC PGM=COREROD
+//STEPLIB     DD DSN=HRD.ROCKET.PROD.LOADLIB,DISP=SHR
+//SYSOUT      DD SYSOUT=*
+//RESULTS     DD SYSOUT=*
+//*GRAIN DIAMETER,TOTAL GRAIN LENGTH,CORE ROD DIAMETER
+//DATA        DD *
+1.935,5,0.5
+
