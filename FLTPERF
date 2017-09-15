@@ -1,0 +1,98 @@
+***********************************************************************
+* CATEGORY.: ROCKET CALCULATIONS
+* GROUP....: FORTRAN PROGRAMS
+* AUTHOR...: LANCE HAYNIE <LANCE@HAYNIEMAIL.COM>
+* DATE.....: 2017-09-14
+* PURPOSE..: FLIGHT PERFORMANCE - SUBSONIC ONLY
+************************************************************************
+* MODIFICATIONS
+* 2017-09-14 - LHAYNIE - INITIAL VERSION
+************************************************************************
+        PROGRAM FLTPERF
+        REAL FE, ITE, TE, MPE, MRE, DIAE, CDE, MRAE, AE, AEG
+        REAL PAZD, TTPAZD, VMAXE, ZED1E, ITERME
+        REAL FACT1E, FACT2E, FACT3E, FACT4E
+        REAL PALT, TTPA, MVFT, MVMPH, BA
+        OPEN (UNIT=1,FILE='DATA')
+        READ (1,*) FE, ITE, MPE, MRE, DIAE, CDE
+        TE = ITE/FE
+        MRAE = MRE+MPE/2
+        AE = (FE/MRAE-1)*32.18
+        AEG = AE/32.18
+        ZED1E = ((FE*32.18/MRAE-32.18)*TE**2)/2
+        PAZD = FE*ZED1E/MRAE
+        TTPAZD = TE+SQRT(2*(PAZD-ZED1E)/32.18)
+        VMAXE = SQRT(2*ZED1E/MRAE*(FE-MRAE)*32.18)
+        ITERME = CDE*DIAE**2*VMAXE**2/(MRE/32.18)/24353
+
+        IF (1/(1.049909+0.001719*ITERME**1.0042225) > 1) THEN
+          FACT1E = 1
+        ELSE
+          FACT1E = 1/(1.049909+0.001719*ITERME**1.0042225)
+        END IF
+
+        IF (1/(1.048224+0.001093*ITERME**0.97255) > 1) THEN
+          FACT2E = 1
+        ELSE
+          FACT2E = 1/(1.048224+0.001093*ITERME**0.97255)
+        END IF
+
+        IF ((0.99769-0.000075691*ITERME) > 1) THEN
+          FACT3E = 1
+        ELSE
+          FACT3E = 0.99769-0.000075691*ITERME
+        END IF
+
+        IF ((0.99973-0.000043807*ITERME) > 1) THEN
+          FACT4E = 1
+        ELSE
+          FACT4E = 0.99973-0.000043807*ITERME
+        END IF
+
+        PALT = FACT1E*PAZD
+        TTPA = FACT2E*TTPAZD
+        MVFT = FACT3E*VMAXE
+        MVMPH = MVFT*0.6818
+        BA = FACT4E*ZED1E
+
+        OPEN (UNIT=2,FILE='RESULTS',STATUS='NEW')
+        WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
+        WRITE (2,*) "FLIGHT PERFORMANCE FOR SUBSONIC ROCKETS"
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "INPUT DATA:"
+        WRITE (2,*) " "
+        WRITE (2,*) "MOTOR AVERAGE THRUST:", FE
+        WRITE (2,*) "MOTOR TOTAL IMPULSE:", ITE
+        WRITE (2,*) "MOTOR PROPELLANT WEIGHT:", MPE
+        WRITE (2,*) "ROCKET WEIGHT (NO PROPELLANT):", MRE
+        WRITE (2,*) "ROCKET DIAMETER (MAX):", DIAE
+        WRITE (2,*) "ROCKET DRAG COEFFICIENT:", CDE
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "ZERO DRAG CALCULATIONS:"
+        WRITE (2,*) " "
+        WRITE (2,*) "PEAK ALTITUDE (FT):", PAZD
+        WRITE (2,*) "TIME TO PEAK ALTITUDE (SEC):", TTPAZD
+        WRITE (2,*) "MAX VELOCITY (FT/SEC):", VMAXE
+        WRITE (2,*) "BURNOUT ALTITUDE (FT):", ZED1E
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "DRAG REDUCTION FACTORS:"
+        WRITE (2,*) " "
+        WRITE (2,*) "DRAG INFLUENCE NUMBER:", ITERME
+        WRITE (2,*) "PEAK ALTITUDE REDUCTION FACTOR:", FACT1E
+        WRITE (2,*) "TIME TO PEAK REDUCTION FACTOR:", FACT2E
+        WRITE (2,*) "MAX VELOCITY REDUCTION FACTOR:", FACT3E
+        WRITE (2,*) "BURNOUT ALTITUDE REDUCTION FACTOR:", FACT4E
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "RESULTS:"
+        WRITE (2,*) " "
+        WRITE (2,*) "MOTOR THRUST TIME:", TE
+        WRITE (2,*) "ROCKET FLIGHT WEIGHT (AVG):", MRAE
+        WRITE (2,*) "ACCELERATION (AVG FT/SEC**2):", AE
+        WRITE (2,*) "ACCELERATION (AVG G):", AEG
+        WRITE (2,*) "PEAK ALTITUDE (FT):", PALT
+        WRITE (2,*) "TIME TO PEAK ALTITUDE (SEC):", TTPA
+        WRITE (2,*) "MAX VELOCITY (FT/SEC):", MVFT
+        WRITE (2,*) "MAX VELOCITY (MPH):", MVMPH
+        WRITE (2,*) "BURNOUT ALTITUDE (FT):", BA
+        CLOSE (2)
+        END
