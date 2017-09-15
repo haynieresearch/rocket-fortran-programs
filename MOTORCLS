@@ -1,0 +1,73 @@
+***********************************************************************
+* CATEGORY.: ROCKET CALCULATIONS
+* GROUP....: FORTRAN PROGRAMS
+* AUTHOR...: LANCE HAYNIE <LANCE@HAYNIEMAIL.COM>
+* DATE.....: 2017-09-14
+* PURPOSE..: CONVERT NS TO MOTOR   CLASSIFICATION
+************************************************************************
+* MODIFICATIONS
+* 2017-09-14 - LHAYNIE - INITIAL VERSION
+************************************************************************
+        PROGRAM MOTORCLS
+        REAL N
+        CHARACTER CLASS*5
+        OPEN (UNIT=1,FILE="DATA")
+        READ (1,*) N
+        IF (N >= 0 .AND. N <= 0.3125) THEN
+          CLASS = "MICRO"
+        ELSE IF (N >= 0.3126 .AND. N <= 0.625) THEN
+          CLASS = "1/4A"
+        ELSE IF (N >= 0.626 .AND. N <= 1.25) THEN
+          CLASS = "1/2A"
+        ELSE IF (N >= 1.26 .AND. N <= 2.5) THEN
+          CLASS = "A"
+        ELSE IF (N >= 2.51 .AND. N <= 5) THEN
+          CLASS = "B"
+        ELSE IF (N >= 5.01 .AND. N <= 10) THEN
+          CLASS = "C"
+        ELSE IF (N >= 10.01 .AND. N <= 20) THEN
+          CLASS = "D"
+        ELSE IF (N >= 20.01 .AND. N <= 40) THEN
+          CLASS = "E"
+        ELSE IF (N >= 40.01 .AND. N <= 80) THEN
+          CLASS = "F"
+        ELSE IF (N >= 80.01 .AND. N <= 160) THEN
+          CLASS = "G"
+        ELSE IF (N >= 160.01 .AND. N <= 320) THEN
+          CLASS = "H"
+        ELSE IF (N >= 320 .AND. N <= 640) THEN
+          CLASS = "I"
+        ELSE IF (N >= 640 .AND. N <= 1280) THEN
+          CLASS = "J"
+        ELSE IF (N >= 1280 .AND. N <= 2560) THEN
+          CLASS = "K"
+        ELSE IF (N >= 2560 .AND. N <= 5120) THEN
+          CLASS = "L"
+        ELSE IF (N >= 5120 .AND. N <= 10240) THEN
+          CLASS = "M"
+        ELSE IF (N >= 10240 .AND. N <= 20560) THEN
+          CLASS = "N"
+        ELSE IF (N >= 20560 .AND. N <= 40960) THEN
+          CLASS = "O"
+        ELSE IF (N >= 40960 .AND. N <= 81920) THEN
+          CLASS = "P"
+        ELSE IF (N >= 81920 .AND. N <= 163840) THEN
+          CLASS = "Q"
+        ELSE IF (N >= 163840 .AND. N <= 327680) THEN
+          CLASS = "R"
+        ELSE IF (N >= 327680 .AND. N <= 655360) THEN
+          CLASS = "S"
+        ELSE IF (N > 655360) THEN
+          CLASS = "PROFESSIONAL"
+        ELSE
+          CLASS = "UNKNOWN"
+        END IF
+        OPEN (UNIT=2,FILE="RESULTS",STATUS="NEW")
+        WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
+        WRITE (2,*) "ROCKET MOTOR CLASSIFICATION"
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "TOTAL IMPULSE (N):", N
+        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "MOTOR CLASSIFICATION: ", CLASS
+        CLOSE (2)
+        END
