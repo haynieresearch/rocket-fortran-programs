@@ -7,21 +7,33 @@
 ************************************************************************
 * MODIFICATIONS
 * 2017-09-14 - LHAYNIE - INITIAL VERSION
+* 2017 09-15 - LHAYNIE - UPDATED INPUT READ
 ************************************************************************
         PROGRAM CORERODE
         REAL GD, TGL, CRD, PI, FD
+        CHARACTER*3 VER
+
+        VER = "1.0"
         PI = 3.14159265359
+
         OPEN (UNIT=1,FILE='DATA')
-        READ (1,*) GD, TGL, CRD
+        READ (1,*) GD
+        READ (1,*) TGL
+        READ (1,*) CRD
+
         FD = ((GD/2)**2-(CRD/2)**2)*PI*TGL/((GD/2)**2*PI)
+
         OPEN (UNIT=2,FILE='RESULTS',STATUS='NEW')
         WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
-        WRITE (2,*) "CALCULATE DEPTH OF FILLING WHEN USING CORE RODS"
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "CORE ROD FILL DEPTH CALCULATOR"
+        WRITE (2,*) "VERSION ", VER
+        WRITE (2,*) " "
+        WRITE (2,*) "-INPUT DATA-"
         WRITE (2,*) "GRAIN DIAMETER (IN):", GD
         WRITE (2,*) "TOTAL GRAIN LENGTH (IN):", TGL
         WRITE (2,*) "CORE ROD DIAMETER (IN):", CRD
-        WRITE (2,*) "**************************************************"
-        WRITE (2,*) "FILL TO (IN)", FD
+        WRITE (2,*) " "
+        WRITE (2,*) "-RESULTS-"
+        WRITE (2,*) "FILL TO (IN):", FD
         CLOSE (2)
         END
