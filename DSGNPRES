@@ -7,14 +7,26 @@
 ************************************************************************
 * MODIFICATIONS
 * 2017-09-14 - LHAYNIE - INITIAL VERSION
+* 2017 09-15 - LHAYNIE - UPDATED INPUT READ
 ************************************************************************
         PROGRAM DSGNPRES
         REAL CA, CB, CC, CD, CE, PI
         REAL BETA, BF, DP, BP, BSF, DD, DC
         REAL OD, T, SD, FTY, FTU, E, V
+        CHARACTER*50 NAME
+        CHARACTER*3 VER
+
+        VER = "1.0"
 
         OPEN (UNIT=1,FILE='DATA')
-        READ (1,*) OD, T, SD, FTY, FTU, E, V
+        READ (1,*) NAME
+        READ (1,*) OD
+        READ (1,*) T
+        READ (1,*) SD
+        READ (1,*) FTY
+        READ (1,*) FTU
+        READ (1,*) E
+        READ (1,*) V
 
         CA = 9.5833
         CB = -33.528
@@ -33,8 +45,12 @@
 
         OPEN (UNIT=2,FILE="RESULTS",STATUS="NEW")
         WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
-        WRITE (2,*) "CALCULATE DESIGN & BURST PRESSURE"
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "DESIGN & BURST PRESSURE"
+        WRITE (2,*) "VERSION ", VER
+        WRITE (2,*) " "
+        WRITE (2,*) "CALCULATIONS FOR: ", NAME
+        WRITE (2,*) " "
+        WRITE (2,*) "-USER INPUT DATA-"
         WRITE (2,*) "OUTSIDE DIAMETER (OD):", OD, "IN/MM"
         WRITE (2,*) "WALL THICKNESS:", T, "IN/MM"
         WRITE (2,*) "DESIGN SAFETY FACTOR:", SD
@@ -42,14 +58,15 @@
         WRITE (2,*) "ULTIMATE STRENGTH:", FTU, "KSI/MPA"
         WRITE (2,*) "MODULOUS OF ELASTICITY:", E, "MSI/MPA"
         WRITE (2,*) "POISSONS RATIO:", V
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) " "
+        WRITE (2,*) "-RESULTS-"
         WRITE (2,*) "BURST FACTOR:", BF, "PSI/KPA"
         WRITE (2,*) "DESIGN PRESSURE (DP):", DP, "PSI/KPA"
         WRITE (2,*) "BURST PRESSURE:", BP
         WRITE (2,*) "BURST SAFETY FACTOR:", BSF
         WRITE (2,*) "CHANGE IN DIAMETER AT DP:", DD, "IN/M"
         WRITE (2,*) "CHANGE IN CIRCUMFERENCE AT DP:", DC, "IN/M"
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) " "
         WRITE (2,*) "NOTES:"
         WRITE (2,*) "KSI = PSI(LB/IN**2) X 1000"
         WRITE (2,*) "MSI = PSI(LB/IN**2) X 10**6"
