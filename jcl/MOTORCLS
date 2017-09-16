@@ -1,5 +1,5 @@
 //LHAYNIEU    JOB (HAYNIE),'ROCKET MOTOR CLASS',
-//            CLASS=U,NOTIFY=&SYSUID,MSGCLASS=U,REGION=4096K
+//            CLASS=U,NOTIFY=&SYSUID,MSGCLASS=A,REGION=4096K
 //**********************************************************************
 //* CATEGORY.: ROCKET CALCULATIONS
 //* GROUP....: FORTRAN PROGRAMS
@@ -9,9 +9,11 @@
 //**********************************************************************
 //MOTORCLS    EXEC PGM=MOTORCLS
 //STEPLIB     DD DSN=HRD.ROCKET.PROD.LOADLIB,DISP=SHR
+//*
+//*CHANGE RESULTS SYSOUT TO P TO SEND TO PRINTER
 //SYSOUT      DD SYSOUT=*
 //RESULTS     DD SYSOUT=*
+//*
 //*TOTAL IMPULSE
 //DATA        DD *
 1100
-
