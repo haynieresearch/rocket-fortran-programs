@@ -11,8 +11,13 @@
         PROGRAM MOTORCLS
         REAL N
         CHARACTER CLASS*5
+        CHARACTER*3 VER
+
+        VER = "1.0"
+
         OPEN (UNIT=1,FILE="DATA")
         READ (1,*) N
+
         IF (N >= 0 .AND. N <= 0.3125) THEN
           CLASS = "MICRO"
         ELSE IF (N >= 0.3126 .AND. N <= 0.625) THEN
@@ -62,12 +67,16 @@
         ELSE
           CLASS = "UNKNOWN"
         END IF
+
         OPEN (UNIT=2,FILE="RESULTS",STATUS="NEW")
         WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
         WRITE (2,*) "ROCKET MOTOR CLASSIFICATION"
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) "VERSION ", VER
+        WRITE (2,*) " "
+        WRITE (2,*) "-INPUT DATA-"
         WRITE (2,*) "TOTAL IMPULSE (N):", N
-        WRITE (2,*) "**************************************************"
+        WRITE (2,*) " "
+        WRITE (2,*) "-RESULTS-"
         WRITE (2,*) "MOTOR CLASSIFICATION: ", CLASS
         CLOSE (2)
         END
