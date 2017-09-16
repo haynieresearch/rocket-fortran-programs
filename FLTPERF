@@ -7,14 +7,27 @@
 ************************************************************************
 * MODIFICATIONS
 * 2017-09-14 - LHAYNIE - INITIAL VERSION
+* 2017 09-15 - LHAYNIE - UPDATED INPUT READ
 ************************************************************************
         PROGRAM FLTPERF
         REAL FE, ITE, TE, MPE, MRE, DIAE, CDE, MRAE, AE, AEG
         REAL PAZD, TTPAZD, VMAXE, ZED1E, ITERME
         REAL FACT1E, FACT2E, FACT3E, FACT4E
         REAL PALT, TTPA, MVFT, MVMPH, BA
+        CHARACTER*3 VER
+        CHARACTER*50 NAME
+
+        VER = "1.0"
+
         OPEN (UNIT=1,FILE='DATA')
-        READ (1,*) FE, ITE, MPE, MRE, DIAE, CDE
+        READ (1,*) NAME
+        READ (1,*) FE
+        READ (1,*) ITE
+        READ (1,*) MPE
+        READ (1,*) MRE
+        READ (1,*) DIAE
+        READ (1,*) CDE
+
         TE = ITE/FE
         MRAE = MRE+MPE/2
         AE = (FE/MRAE-1)*32.18
@@ -58,33 +71,31 @@
         OPEN (UNIT=2,FILE='RESULTS',STATUS='NEW')
         WRITE (2,*) "HAYNIE RESEARCH & DEVELOPMENT"
         WRITE (2,*) "FLIGHT PERFORMANCE FOR SUBSONIC ROCKETS"
-        WRITE (2,*) "**************************************************"
-        WRITE (2,*) "INPUT DATA:"
+        WRITE (2,*) "VERSION ", VER
         WRITE (2,*) " "
+        WRITE (2,*) NAME
+        WRITE (2,*) "-USER INPUT DATA-"
         WRITE (2,*) "MOTOR AVERAGE THRUST:", FE
         WRITE (2,*) "MOTOR TOTAL IMPULSE:", ITE
         WRITE (2,*) "MOTOR PROPELLANT WEIGHT:", MPE
         WRITE (2,*) "ROCKET WEIGHT (NO PROPELLANT):", MRE
         WRITE (2,*) "ROCKET DIAMETER (MAX):", DIAE
         WRITE (2,*) "ROCKET DRAG COEFFICIENT:", CDE
-        WRITE (2,*) "**************************************************"
-        WRITE (2,*) "ZERO DRAG CALCULATIONS:"
         WRITE (2,*) " "
+        WRITE (2,*) "-ZERO DRAG CALCULATIONS-"
         WRITE (2,*) "PEAK ALTITUDE (FT):", PAZD
         WRITE (2,*) "TIME TO PEAK ALTITUDE (SEC):", TTPAZD
         WRITE (2,*) "MAX VELOCITY (FT/SEC):", VMAXE
         WRITE (2,*) "BURNOUT ALTITUDE (FT):", ZED1E
-        WRITE (2,*) "**************************************************"
-        WRITE (2,*) "DRAG REDUCTION FACTORS:"
         WRITE (2,*) " "
+        WRITE (2,*) "-DRAG REDUCTION FACTORS-"
         WRITE (2,*) "DRAG INFLUENCE NUMBER:", ITERME
         WRITE (2,*) "PEAK ALTITUDE REDUCTION FACTOR:", FACT1E
         WRITE (2,*) "TIME TO PEAK REDUCTION FACTOR:", FACT2E
         WRITE (2,*) "MAX VELOCITY REDUCTION FACTOR:", FACT3E
         WRITE (2,*) "BURNOUT ALTITUDE REDUCTION FACTOR:", FACT4E
-        WRITE (2,*) "**************************************************"
-        WRITE (2,*) "RESULTS:"
         WRITE (2,*) " "
+        WRITE (2,*) "-RESULTS-"
         WRITE (2,*) "MOTOR THRUST TIME:", TE
         WRITE (2,*) "ROCKET FLIGHT WEIGHT (AVG):", MRAE
         WRITE (2,*) "ACCELERATION (AVG FT/SEC**2):", AE
